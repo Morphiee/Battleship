@@ -1,0 +1,17 @@
+#table1 {
+    height: 80%;
+    width: 40%;
+    border: 5px solid #000;
+}
+
+.clicked {
+    background-color: #ffc220;
+}
+
+.TorUsed {
+    margin-right: 40%;
+}
+
+td {
+    border: 5px solid #000;
+}
