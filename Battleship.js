@@ -2,6 +2,7 @@ var board = [[], [], [], [], [], [], [], [], [], []]
 
 $(document).ready(function() {
     var torpedoes = 0;
+    var torpedoesleft = 25;
     const ship = 1;
     for (var index = 0; index <10; index++) {
         $("#table1").append("<tr>")
@@ -38,7 +39,9 @@ $(document).ready(function() {
         index = $(this).attr("id");
         $(this).addClass("clicked");
         torpedoes += 1;
+        torpedoesleft -= 1;
         $(".TorUsed").text("Torpedoes Used: " + torpedoes);
+        $(".torLeft").text("Torpedoes Left: " + torpedoesleft);
         if (index == 1) {
             console.log("Hit!");
         } else {
