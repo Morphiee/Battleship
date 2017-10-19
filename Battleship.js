@@ -1,9 +1,11 @@
 var board = [[], [], [], [], [], [], [], [], [], []]
+var hitCounter = 0;
 
 $(document).ready(function() {
     var torpedoes = 0;
     var torpedoesleft = 25;
     var ships;
+    var count;
     const ship = 1;
     for (var index = 0; index <10; index++) {
         $("#table1").append("<tr>")
@@ -19,8 +21,8 @@ $(document).ready(function() {
         randomCounterRow = Math.floor(Math.random() * 9);
         return randomCounterRow;
     }
-
-    for (var count = 0; count < 6; count++) {
+// changes board array at row and cell location to hold a ship
+    for (var count = 0; count < 5; count++) {
         // save random number for row to a var
         randomNum();
         var rowNum = randomCounterRow;
@@ -28,30 +30,34 @@ $(document).ready(function() {
         randomNum();
         var cellNum = randomCounterRow;
         // board[varRow[varCell]]
+
         board[rowNum][cellNum] = ship;
 
-        var joined = "#" + rowNum.toString() + cellNum.toString();
+        console.log(test);
 
+        var joined = "#" + rowNum.toString() + cellNum.toString();
         $(joined).addClass("joined");
+
+        var test = "#" + rowNum + cellNum;
+
+        $(test).removeAttr("id");
 
         console.log(board);
     }
 
-    // create ship function
-    // takes in length of ship and random row and cell number
-    // changes board array at row and cell location to hold a ship
     $("td").on("click", function() {
-        var hitCounter = 0;
-        var index = $(this).attr("id").split("");
+        var index = $(this).attr("class");
         torpedoes += 1;
         torpedoesleft -= 1;
         $(".TorUsed").text("Torpedoes Used: " + torpedoes);
         $(".torLeft").text("Torpedoes Left: " + torpedoesleft);
 
-        if (ship == board[index[0]][index[1]]) {
+        // if (ship == board[index[0]][index[1]])
+
+        if ($(this).hasClass("joined")) {
             $(".hitOrMiss").text("Hit!");
-            hitCounter ++;
-            $(this).addClass("hit")
+            $(this).addClass("hit");
+            hitCounter += 1;
         } else {
             $(".hitOrMiss").text("Miss!");
             $(this).addClass("miss");
@@ -61,21 +67,12 @@ $(document).ready(function() {
             $(this).addClass("lost");
             $(".joined").addClass("hit");
             $("td").off("click");
-            // alert("You have no more torpedoes! You lose :(");
+            $(".hitOrMiss").text("You have no more torpedoes! You lose :(")
             // location.reload();
         }
-
-        if (hitCounter == 5) {
-            alert("You win!");
+        if (hitCounter === 5) {
+            alert("You won!")
             location.reload();
         }
-    });
+    })
 });
-
-
-  // for (var index = 0; index <=10; index++) {
-  //   for (var index = 0; index <=10; index++) {
-  //     $("#table1").append("<tbody><tr>" + index + "</tr></tbody>")
-  //     }; {
-  //   $("#table1").append("<tr><td>" + index + "</td></tr>")
-  // }};
