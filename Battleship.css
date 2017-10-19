@@ -11,8 +11,17 @@
     border: 5px solid #000;
 }
 
-.clicked {
+.miss {
     background-color: #ffc220;
+}
+
+.hit {
+    background-color: red;
+}
+
+.hitOrMiss {
+    text-align: center;
+    color: white;
 }
 
 .TorUsed {

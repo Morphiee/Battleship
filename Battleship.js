@@ -3,11 +3,12 @@ var board = [[], [], [], [], [], [], [], [], [], []]
 $(document).ready(function() {
     var torpedoes = 0;
     var torpedoesleft = 25;
+    var ships;
     const ship = 1;
     for (var index = 0; index <10; index++) {
         $("#table1").append("<tr>")
         for (var i = 0; i <10; i++) {
-            $("#table1").append("<td id="+index+i+"</td>")
+            $("#table1").append("<td id="+index+i+">")
         }
     }
 
@@ -28,29 +29,44 @@ $(document).ready(function() {
         var cellNum = randomCounterRow;
         // board[varRow[varCell]]
         board[rowNum][cellNum] = ship;
+
+        var joined = "#" + rowNum.toString() + cellNum.toString();
+
+        $(joined).addClass("joined");
+
         console.log(board);
     }
 
     // create ship function
     // takes in length of ship and random row and cell number
     // changes board array at row and cell location to hold a ship
-
     $("td").on("click", function() {
-        index = $(this).attr("id");
-        $(this).addClass("clicked");
+        var hitCounter = 0;
+        var index = $(this).attr("id").split("");
         torpedoes += 1;
         torpedoesleft -= 1;
         $(".TorUsed").text("Torpedoes Used: " + torpedoes);
         $(".torLeft").text("Torpedoes Left: " + torpedoesleft);
-        if (index == 1) {
-            console.log("Hit!");
+
+        if (ship == board[index[0]][index[1]]) {
+            $(".hitOrMiss").text("Hit!");
+            hitCounter ++;
+            $(this).addClass("hit")
         } else {
-            console.log("Miss!");
+            $(".hitOrMiss").text("Miss!");
+            $(this).addClass("miss");
         }
         $(this).off("click");
         if (torpedoes > 24) {
             $(this).addClass("lost");
-            alert("You have no more torpedoes! You lose :(");
+            $(".joined").addClass("hit");
+            $("td").off("click");
+            // alert("You have no more torpedoes! You lose :(");
+            // location.reload();
+        }
+
+        if (hitCounter == 5) {
+            alert("You win!");
             location.reload();
         }
     });
